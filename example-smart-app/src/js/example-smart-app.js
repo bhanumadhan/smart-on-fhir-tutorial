@@ -15,9 +15,12 @@
                     type: 'Observation',
                     query: {
                       code: {
-                        $or: ['http://loinc.org|8302-2', 
-                               'http://loinc.org|2085-9',
-                              'http://loinc.org|2089-1', 'http://loinc.org|85354-9']
+                        $or: ['http://loinc.org|8302-2', //Body height
+                               'http://loinc.org|2085-9', //HDL
+                              'http://loinc.org|2089-1', //LDL
+                              'http://loinc.org|85354-9', //Blood pressure panel
+                              'http://loinc.org|8310-5' //Temprature
+                             ]
                       }
                     }
                   });
@@ -37,6 +40,7 @@
           }
 
           var height = byCodes('8302-2');
+          var bodytemp = byCodes('8310-5');
           var systolicbp = getBloodPressureValue(byCodes('85354-9'),'8480-6');
           var diastolicbp = getBloodPressureValue(byCodes('85354-9'),'8462-4');
           var hdl = byCodes('2085-9');
@@ -48,7 +52,7 @@
           p.fname = fname;
           p.lname = lname;
           p.height = getQuantityValueAndUnit(height[0]);
-
+          p.bodytemp = getQuantityValueAndUnit(bodytemp[0]);
           if (typeof systolicbp != 'undefined')  {
             p.systolicbp = systolicbp;
           }
@@ -83,6 +87,7 @@
       diastolicbp: {value: ''},
       ldl: {value: ''},
       hdl: {value: ''},
+      bodytemp: {value: ''}
     };
   }
 
